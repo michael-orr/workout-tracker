@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const { Exercise, Workout } = require('../models');
+const { Workout } = require('../models');
 
 // get last workout__________/api/workouts__________GET
 router.get('/workouts', (req, res) => {
-    Workout.find((err, data) => {
+    const workouts = Workout.find((err, data) => {
       if (err) {
         console.log(err);
       } else {
@@ -15,27 +15,16 @@ router.get('/workouts', (req, res) => {
 
 
 // add exercise to workout__________/api/workouts/${id}__________PUT
-router.post('/workouts/:id', (req, res) => {
-    Workout.update(
-      {
-        _id: mongojs.ObjectId(req.params.id),
-      },
-      {
-        $push: { exercises: req.body.exercises }
-      },
-      (error, data) => {
-        if (error) {
-          res.send(error);
-        } else {
-          res.send(data);
-        }
-      }
-    );
-  });
+router.put('/workouts/:id', async (req, res) => {
+    const workout = Workout.findById(req.params.id);
+    workout.exercises.push(req.body);
+    const result = await workout.save();
+    res.send(result);
+    });
 
 //add new workout__________/api/workouts__________POST
 router.post('/workouts', (req, res) => {
-    Workout.insert(req.body, (error, data) => {
+    Workout.create(req.body, (error, data) => {
     if (error) {
       res.send(error);
     } else {
@@ -44,8 +33,16 @@ router.post('/workouts', (req, res) => {
   });
 });
 
-
 //get workouts in range__________/api/workouts/range__________GET
-
+router.get('/workouts/range', (req, res) => {
+    const workouts = Workout.find((err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(workouts);
+        res.json(workouts);
+      }
+    });
+  });
 
 module.exports = router;
