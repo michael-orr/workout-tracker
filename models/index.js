@@ -1,3 +1,3 @@
-const Workout = require('../models/Workout');
+const Workout = require('./Workout');
 
 module.exports = { Workout };
