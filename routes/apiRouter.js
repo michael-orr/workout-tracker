@@ -16,6 +16,9 @@ router.get("/workouts/range", (req, res) => {
     });
 });
 
+
+
+
 router.post("/workouts", ({ body }, res) => {
   db.Workout.create(body).then((data) => {
     res.json(data);
