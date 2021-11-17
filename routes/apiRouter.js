@@ -13,13 +13,11 @@ router.get('/workouts', (req, res) => {
     });
   });
 
-
 // add exercise to workout__________/api/workouts/${id}__________PUT
 router.put('/workouts/:id', async (req, res) => {
     const workout = await Workout.findByIdAndUpdate(req.params.id, { $push: { exercises: req.body } });
     await res.json(workout)
     });
-
 
 //add new workout__________/api/workouts__________POST
 router.post('/workouts', async (req, res) => {
@@ -31,7 +29,6 @@ router.post('/workouts', async (req, res) => {
     }
   });
 });
-
 
 //get workouts in range__________/api/workouts/range__________GET
 router.get('/workouts/range', (req, res) => {
@@ -46,3 +43,4 @@ router.get('/workouts/range', (req, res) => {
   });
 
 module.exports = router;
+
