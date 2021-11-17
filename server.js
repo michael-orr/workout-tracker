@@ -17,6 +17,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/budget", {
   useUnifiedTopology: true,
 });
 
+
 // routes
 app.use(router);
 
