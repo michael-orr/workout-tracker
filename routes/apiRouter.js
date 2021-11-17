@@ -3,17 +3,10 @@ const db = require("../models");
 
 router.get("/workouts", (req, res) => {
   db.Workout.aggregate([
-    {
-      $addFields: {
-        totalDuration: { $sum: "$exercises.duration" },
-      },
-    },
+    { $addFields: { totalDuration: { $sum: "$exercises.duration" } } },
   ])
-    .then((workout) => {
-      res.json(workout);
-    })
-    .catch((err) => {
-      res.json(err);
+    .then((data) => {
+      res.json(data);
     });
 });
 
@@ -27,21 +20,15 @@ router.get("/workouts/range", (req, res) => {
   ])
     .sort({ _id: -1 })
     .limit(7)
-    .then((workout) => {
-      res.json(workout);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
+    .then((data) => {
+      res.json(data);
     });
 });
 
 router.post("/workouts", ({ body }, res) => {
   db.Workout.create(body)
-    .then((workout) => {
-      res.json(workout);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
+    .then((data) => {
+      res.json(data);
     });
 });
 
@@ -51,11 +38,8 @@ router.put("/workouts/:id", ({ params, body }, res) => {
     { $push: { exercises: body } },
     { new: true }
   )
-    .then((workout) => {
-      res.json(workout);
-    })
-    .catch((err) => {
-      res.json(err);
+    .then((data) => {
+      res.json(data);
     });
 });
 
